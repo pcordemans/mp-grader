@@ -1,0 +1,6 @@
+.*
+!.gitignore
+null
+Powershell*
+target
+metals.sbt

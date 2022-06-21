@@ -25,4 +25,20 @@ class MPSuite extends munit.FunSuite {
     assertEquals(Match.answer("antwoord: A <!--vul hier het antwoord in-->"), Some("A"))
     assertEquals(Match.answer("antwoord: <!--vul hier het antwoord in-->"), None)
   }
+
+  test("parse single answer"){
+    val input = List(
+      "---",
+      "oplossing:",
+      "    vraag: 1",
+      "    antwoord: A",
+      "..."
+    )
+
+    val expected = List(
+      Answer(1,'A')
+    )
+
+    assertEquals(Parser.parse(input),expected)
+  }
 }

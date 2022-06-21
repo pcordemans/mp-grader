@@ -1,3 +1,5 @@
+import scala.util.matching.Regex
+
 object Parser {
   def parse(in:List[String]):List[Option[String]]={
 
@@ -17,17 +19,16 @@ object Parser {
 
 object Match {
     def question(s: String): Option[String] = {
-        val questionPattern = ".*vraag:.(\\d+)".r
-        s match{
-            case questionPattern(number) => Some(number)
-            case _ => None
-        }
+        patternMatch(s, ".*vraag:.(\\d+)".r)
     }
 
     def answer(s: String): Option[String] = {
-        val answerPattern = ".*antwoord:.*([ABCDX]).*".r
+        patternMatch(s, ".*antwoord:.*([ABCDX]).*".r)
+    }
+
+    private def patternMatch(s: String, r: Regex): Option[String] = {
         s match{
-            case answerPattern(answer) => Some(answer)
+            case r(answer) => Some(answer)
             case _ => None
         }
     }

@@ -2,20 +2,20 @@
 
 ## Multiple Choice
 
-### Vraag 0
+### Vraag 1
 
 Wat is het antwoord op de vraag van het universum, het leven en alles?
 
-A: Wiskunde
+A: 42
 
 B: Microcontrollers
 
 C: Databases
 
-D: 42
+D: Wiskunde
 
 ---
 oplossing:
-    vraag: 0
-    antwoord: D
+    vraag: 1
+    antwoord: A
 ...

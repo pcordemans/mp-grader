@@ -41,4 +41,47 @@ class MPSuite extends munit.FunSuite {
 
     assertEquals(Parser.parse(input),expected)
   }
+
+  test("parse multiple answers"){
+    val input = List(
+      "---",
+      "oplossing:",
+      "    vraag: 1",
+      "    antwoord: A",
+      "...",
+      "ignore this",
+      "---",
+      "oplossing:",
+      "    vraag: 2",
+      "    antwoord: B",
+      "...",
+      "A:",
+      "---",
+      "oplossing:",
+      "    vraag: 3",
+      "    antwoord: X",
+      "...",
+      "---",
+      "oplossing:",
+      "    vraag: 4",
+      "    antwoord: ",
+      "..."
+    )
+
+    val expected = List(
+      Answer(4,'X'),
+      Answer(3,'X'),
+      Answer(2,'B'),
+      Answer(1,'A')
+    )
+
+    assertEquals(Parser.parse(input),expected)    
+  }
+
+  test("get grade from answers") {
+      assertEquals(Grade(4,0,4).score(), "4.0/8")
+      assertEquals(Grade(4,3,3).score(), "3.0/10")
+      assertEquals(Grade(0,0,0).score(), "0.0/0")
+      assertEquals(Grade(4,1,0).score(), "3.66/5")
+  }
 }

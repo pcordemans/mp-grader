@@ -8,6 +8,6 @@ case class Grade(val correct: Int, val wrong: Int, val notSubmitted: Int) {
     def score(): String = {
         val nominator = correct - wrong / 3.0
         val denominator = correct + wrong + notSubmitted
-        nominator + "/" + denominator
+        f"$nominator%1.2f/$denominator"
     }
 }

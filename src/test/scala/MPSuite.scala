@@ -79,9 +79,9 @@ class MPSuite extends munit.FunSuite {
   }
 
   test("get grade from answers") {
-      assertEquals(Grade(4,0,4).score(), "4.0/8")
-      assertEquals(Grade(4,3,3).score(), "3.0/10")
-      assertEquals(Grade(0,0,0).score(), "0.0/0")
-      assertEquals(Grade(4,1,0).score(), "3.66/5")
+      assertEquals(Grade(4,0,4).score(), "4,00/8")
+      assertEquals(Grade(4,3,3).score(), "3,00/10")
+      assertEquals(Grade(0,0,0).score(), "0,00/0")
+      assertEquals(Grade(4,1,0).score(), "3,67/5")
   }
 }

@@ -1,3 +1,5 @@
+import scala.collection.mutable.Map
+
 class MPSuite extends munit.FunSuite {
   test("read single line file") {
     val obtained = readTextFile("./src/test/example/single-line.md")
@@ -35,8 +37,8 @@ class MPSuite extends munit.FunSuite {
       "..."
     )
 
-    val expected = List(
-      Answer(1,'A')
+    val expected = Map(
+      1->Answer(1,'A')
     )
 
     assertEquals(Parser.parse(input),expected)
@@ -68,11 +70,11 @@ class MPSuite extends munit.FunSuite {
       "..."
     )
 
-    val expected = List(
-      Answer(4,'X'),
-      Answer(3,'X'),
-      Answer(2,'B'),
-      Answer(1,'A')
+    val expected = Map(
+      4->Answer(4,'X'),
+      3->Answer(3,'X'),
+      2->Answer(2,'B'),
+      1->Answer(1,'A')
     )
 
     assertEquals(Parser.parse(input),expected)    
@@ -83,5 +85,24 @@ class MPSuite extends munit.FunSuite {
       assertEquals("" +Grade(4,3,3), "3,00/10")
       assertEquals("" +Grade(0,0,0), "0,00/0")
       assertEquals("" +Grade(4,1,0), "3,67/5")
+  }
+
+  test("grade all correct"){
+    val key = Map(
+      4 -> Answer(4,'X'),
+      3 -> Answer(3,'X'),
+      2 -> Answer(2,'B'),
+      1 -> Answer(1,'A')
+    )
+
+    val answers = Map(
+      4 -> Answer(4,'X'),
+      3 -> Answer(3,'X'),
+      2 -> Answer(2,'B'),
+      1 -> Answer(1,'A')
+    )
+
+    val grader = Grader(key)
+    assertEquals(grader.grade(answers), Some(Grade(4,0,0)))
   }
 }

@@ -1,6 +1,9 @@
-object Grader {
-    def grade(key: List[Answer], answer: List[Answer]) : Option[Grade] = {
-        None
+import scala.collection.mutable.Map
+
+class Grader(val key: Map[Int, Answer]) {
+    def grade(answer: Map[Int, Answer]) : Option[Grade] = {
+        if(key.size != answer.size) None
+        else None
     }
 }
 

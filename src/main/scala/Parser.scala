@@ -1,11 +1,12 @@
 import scala.util.matching.Regex
+import scala.collection.mutable.Map
 
 object Parser {
-  def parse(buffer:List[String]):List[Answer]={
+  def parse(buffer:List[String]):Map[Int, Answer]={
     internalParse(buffer)
   }
 
-   private def internalParse(buffer: List[String], answers: List[Answer]=List()):List[Answer] ={
+   private def internalParse(buffer: List[String], answers: Map[Int, Answer]=Map()):Map[Int, Answer] ={
         buffer match {
             case Nil => answers
             case s :: tail => s match {
@@ -15,7 +16,7 @@ object Parser {
         }
     }
 
-   private def parseYAML(buffer: List[String], answers: List[Answer]): List[Answer] ={
+   private def parseYAML(buffer: List[String], answers: Map[Int, Answer]): Map[Int, Answer] ={
         val solutionMatch = ".*oplossing:.*".r
         buffer match {
             case Nil => answers
@@ -26,7 +27,7 @@ object Parser {
         }
     }
     
-   private def parseQuestion(buffer: List[String], answers: List[Answer]): List[Answer] = {
+   private def parseQuestion(buffer: List[String], answers: Map[Int, Answer]): Map[Int, Answer] = {
         buffer match {
             case Nil => answers
             case s :: tail => Match.question(s) match {
@@ -36,12 +37,12 @@ object Parser {
         }
     }
 
-   private def parseAnswer(buffer: List[String], answers: List[Answer], questionNumber: Int): List[Answer] ={
+   private def parseAnswer(buffer: List[String], answers: Map[Int, Answer], questionNumber: Int): Map[Int, Answer] ={
         buffer match {
             case Nil => answers
             case s :: tail => Match.answer(s) match {
-                case Some(answer) => internalParse(tail, Answer(questionNumber, answer.toCharArray()(0)) :: answers)
-                case None => internalParse(tail, Answer(questionNumber, 'X') :: answers)
+                case Some(answer) => internalParse(tail, answers += (questionNumber ->Answer(questionNumber, answer.toCharArray()(0))))
+                case None => internalParse(tail, answers += (questionNumber ->Answer(questionNumber, 'X')))
             }
         }
     }

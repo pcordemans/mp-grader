@@ -111,4 +111,41 @@ class MPSuite extends munit.FunSuite {
     val grader = Grader(key)
     assertEquals(grader.grade(answers), Some(Grade(2,0,2)))
   }
+
+  test("grade 2 correct, 2 wrong, 2 blank"){
+    val key = Map(
+      6 -> Answer(6,'C'),
+      5 -> Answer(5,'C'),
+      4 -> Answer(4,'X'),
+      3 -> Answer(3,'X'),
+      2 -> Answer(2,'B'),
+      1 -> Answer(1,'A')
+    )
+
+    val answers = Map(
+      6 -> Answer(6,'D'),
+      5 -> Answer(5,'D'),
+      4 -> Answer(4,'X'),
+      3 -> Answer(3,'X'),
+      2 -> Answer(2,'B'),
+      1 -> Answer(1,'A')
+    )
+
+    val grader = Grader(key)
+    assertEquals(grader.grade(answers), Some(Grade(2,2,2)))
+  }
+
+  test("number of answers does not correspond"){
+    val key = Map(
+      2 -> Answer(2,'B'),
+      1 -> Answer(1,'A')
+    )
+
+    val answers = Map(
+      1 -> Answer(1,'A')
+    )
+
+    val grader = Grader(key)
+    assertEquals(grader.grade(answers), None)
+  }
 }

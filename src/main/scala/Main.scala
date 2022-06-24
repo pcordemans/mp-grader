@@ -63,7 +63,7 @@ def getFile(nameOfFile: String): Map[Int, Answer] = {
     val path = getPath()
     Console.println(s"Reading: $path")
     readTextFile(path) match {
-        case Some(file) => Parser.parse(file)
+        case Some(file) => trimQuestion0(Parser.parse(file))
         case None => 
             Console.println(s"$nameOfFile not found at $path") 
             getFile(nameOfFile)
@@ -72,5 +72,9 @@ def getFile(nameOfFile: String): Map[Int, Answer] = {
 
 def printNumberOfAnswers(parsedQuestions: Map[Int, Answer]) = {
     val numberOfQuestions = parsedQuestions.size
-    Console.println(s"Found $numberOfQuestions")
+    Console.println(s"Found $numberOfQuestions questions")
+}
+
+def trimQuestion0(parsedQuestions: Map[Int, Answer]): Map[Int, Answer] = {
+    parsedQuestions -= 0
 }

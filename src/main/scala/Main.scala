@@ -6,18 +6,8 @@ import scala.collection.mutable.Map
     banner()
     val answerKey = getFile("Answer Key")
     printNumberOfAnswers(answerKey)
-    val studentAnswers = getFile("Student Answers")
-    printNumberOfAnswers(studentAnswers)
-    readLine("Continue? (y)") match {
-        case "n" =>
-        case _ => 
-            val grader = Grader(answerKey)
-            grader.grade(studentAnswers) match {
-                case Some(grade) => Console.println(grade)
-                case None => Console.println("Well, this is awkward...")
-            }
-    }
-
+    nextStudent( Grader(answerKey))  
+    
 }
 
 object Control {
@@ -77,4 +67,23 @@ def printNumberOfAnswers(parsedQuestions: Map[Int, Answer]) = {
 
 def trimQuestion0(parsedQuestions: Map[Int, Answer]): Map[Int, Answer] = {
     parsedQuestions -= 0
+}
+
+case class Stop(){}
+
+def nextStudent(grader:Grader): Stop = {
+    val studentAnswers = getFile("Student Answers")
+    printNumberOfAnswers(studentAnswers)
+    readLine("Continue? (y)") match {
+        case "n" => Stop()
+        case _ => 
+            grader.grade(studentAnswers) match {
+                case Some(grade) => Console.println(grade)
+                case None => Console.println("Well, this is awkward...")
+            }
+    }
+    readLine("Next student? (y)") match {
+        case "n" => Stop()
+        case _ => nextStudent(grader)
+    }
 }

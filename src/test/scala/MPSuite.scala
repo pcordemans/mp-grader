@@ -87,17 +87,13 @@ class MPSuite extends munit.FunSuite {
       assertEquals("" + Grade(4,1,0), "3,67/5")
   }
 
-  test("grade correct, wrong and blank"){
-    val grade = Grade(0,0,0)
-    val correct1 = grade.incrementCorrect()
-    assertEquals(correct1, Grade(1,0,0))
-    val wrong1 = correct1.incrementWrong()
-    assertEquals(wrong1, Grade(1,1,0))
-    val blank1 = wrong1.incrementBlank()
-    assertEquals(blank1, Grade(1,1,1))
+  test("sum all grades"){
+    val listOfGrades = List(Grade(correct = 2), Grade(wrong = 1), Grade(blank = 3))
+    assertEquals(Grade.sumOfGrades(listOfGrades), Grade(2,1,3))
+
   }
 
-  test("grade all correct"){
+  test("grade 2 correct, 2 blank"){
     val key = Map(
       4 -> Answer(4,'X'),
       3 -> Answer(3,'X'),
@@ -113,6 +109,6 @@ class MPSuite extends munit.FunSuite {
     )
 
     val grader = Grader(key)
-    assertEquals(grader.grade(answers), Some(Grade(4,0,0)))
+    assertEquals(grader.grade(answers), Some(Grade(2,0,2)))
   }
 }

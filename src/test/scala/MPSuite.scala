@@ -82,9 +82,19 @@ class MPSuite extends munit.FunSuite {
 
   test("get grade from answers") {
       assertEquals("" + Grade(4,0,4), "4,00/8")
-      assertEquals("" +Grade(4,3,3), "3,00/10")
-      assertEquals("" +Grade(0,0,0), "0,00/0")
-      assertEquals("" +Grade(4,1,0), "3,67/5")
+      assertEquals("" + Grade(4,3,3), "3,00/10")
+      assertEquals("" + Grade(0,0,0), "0,00/0")
+      assertEquals("" + Grade(4,1,0), "3,67/5")
+  }
+
+  test("grade correct, wrong and blank"){
+    val grade = Grade(0,0,0)
+    val correct1 = grade.incrementCorrect()
+    assertEquals(correct1, Grade(1,0,0))
+    val wrong1 = correct1.incrementWrong()
+    assertEquals(wrong1, Grade(1,1,0))
+    val blank1 = wrong1.incrementBlank()
+    assertEquals(blank1, Grade(1,1,1))
   }
 
   test("grade all correct"){

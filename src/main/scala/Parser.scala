@@ -2,6 +2,21 @@ import scala.util.matching.Regex
 import scala.collection.mutable.Map
 
 object Parser {
+  /** 
+   * Parses the buffer with file contents, returning a map of answers in the file
+   * @param buffer use readTextFile to generate the buffer
+   * @return map of answers in the file
+   * 
+   * Parses lines 1 by 1 possible cases:
+   * (1) Ignore everything outside the YAML
+   * (2) "---" start of YAML
+   * (3) "oplossing:" key contains question number and answer
+   * (4) "vraag: x" question: questionNumber
+   * (5) "antwoord: C" answer: answerCharacter
+   * (6) "..." end of YAML
+   * 
+   * result is a map of questionNumber -> answerCharacter  
+   */
   def parse(buffer:List[String]):Map[Int, Answer]={
     internalParse(buffer)
   }
@@ -49,10 +64,13 @@ object Parser {
 }
 
 object Match {
+    
+    /** Matches "vraag: x" returns x with x being an integer in String format */
     def question(s: String): Option[String] = {
         patternMatch(s, ".*vraag:.(\\d+)".r)
     }
 
+    /** Matches "antwoord: C" returns C being*/
     def answer(s: String): Option[String] = {
         patternMatch(s, ".*antwoord:.*([ABCDX]).*".r)
     }

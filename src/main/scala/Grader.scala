@@ -33,7 +33,7 @@ object Grade{
      * @return the aggregate grade of all grades of the individual answers 
      */
     def sumOfGrades(listOfGrades:Iterable[Grade]): Grade = {
-        listOfGrades.reduce((x, y) => Grade(x.correct +y.correct, x.wrong + y.wrong, x.blank + y.blank))
+        listOfGrades.reduce((acc, next) => Grade(acc.correct + next.correct, acc.wrong + next.wrong, acc.blank + next.blank))
     }
 }
 
